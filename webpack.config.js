@@ -1,58 +1,52 @@
-const path = require("path");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: path.resolve(__dirname, "src", "index.js"),
-  output: {
-    path: path.resolve(__dirname, "client"),
-    filename: "bundle.js"
-  },
+  entry: ('./src/index.js'),
   resolve: {
-    extensions: [".js", ".jsx", ".json"]
+    extensions: ['.js', '.jsx', '.json'],
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        include: path.resolve(__dirname, 'src'),
         exclude: /(node_modules|bower_components)/,
-        loader: "babel-loader",
-        options: {
-          presets: [
-            [
-            "es2015", { "modules": false, "loose": true }],
-            "react", 
-            "env",
-            "stage-0",
-          ]
-        }
+        loader: 'babel-loader',
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader",
-            options: { minimize: true }
-          }
-        ]
+            loader: 'html-loader',
+            options: { minimize: true },
+          },
+        ],
       },
       {
         test: /\.css$/,
-        include: path.resolve(__dirname, 'src'),
         loaders: [
           require.resolve('style-loader'),
-          require.resolve('css-loader')        ]
-      }
-    ]
+          require.resolve('css-loader'),
+        ],
+      },
+
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              disable: true,
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./src/index.html"
+      template: './src/index.html',
+      filename: './index.html',
     }),
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
-    })
-  ]
+  ],
 };
