@@ -1,6 +1,13 @@
 {
-    "presets": ["env"],
-    "sourceMaps": true,
-      "retainLines": true
-}
-  
+  "presets": [
+    [
+      "env", {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ],
+    "react"
+  ]
+ }
+ 
