@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
+import logo from '../assets/images/logo.png';
 
 const Landing = () => (
   <div>
@@ -11,7 +12,7 @@ const Landing = () => (
     </div>
     <div className="header">
       <p>
-        <img src="./assets/images/logo.png" className="logo" alt="" />
+        <img src={logo} className="logo" alt="" />
       </p>
       <h2>Easy to use Maintenance Application</h2>
       <h3 className="app-description">M-Tracker helps reaching out for maintenance easier and smoother</h3>
