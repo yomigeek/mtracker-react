@@ -9,7 +9,7 @@ const port = process.env.PORT || '9000';
 
 app.set('port', port);
 
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
