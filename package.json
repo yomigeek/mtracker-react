@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --mode production && babel-node app.js --exec",
-    "dev": "webpack --mode development && babel-node app.js --exec",
+    "dev": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production && node app.js ",
     "postinstall": "webpack --mode production"
   },
