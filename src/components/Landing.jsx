@@ -2,24 +2,25 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
 import logo from '../assets/images/logo.png';
+import '../assets/css/landing.css';
 
 const Landing = () => (
   <div>
-    <div className="topnav">
+    <div className="topnav-land">
       <p>M-Tracker</p>
       <Link to="/login">Login</Link>
 
     </div>
-    <div className="header">
+    <div className="header-land">
       <p>
-        <img src={logo} className="logo" alt="" />
+        <img src={logo} className="logo-land" alt="" />
       </p>
       <h2>Easy to use Maintenance Application</h2>
-      <h3 className="app-description">M-Tracker helps reaching out for maintenance easier and smoother</h3>
+      <h3 className="app-description-land">M-Tracker helps reaching out for maintenance easier and smoother</h3>
       <h4>Get started today!</h4>
-      <a href="signup.html">
-        <button className="create-button" type="button">Create A free Account </button>
-      </a>
+      <Link to="/signup">
+        <button className="create-button-land" type="button">Create A free Account </button>
+      </Link>
 
     </div>
     <Footer />
