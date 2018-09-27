@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
 import Footer from '../components/Footer';
-import SignUp from '../components/SignUp';
-import signUpUser from '../actions/signUpAction';
+import Login from '../components/Login';
+import loginUser from '../actions/loginAction';
 
-class SignUpContainer extends React.Component {
+class LoginContainer extends React.Component {
  state = {
-   username: '',
    email: '',
    password: '',
-   department: '',
  }
 
   /**
@@ -22,12 +19,12 @@ class SignUpContainer extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   }
 
-  signUpFormHandler = async (event) => {
+  loginFormHandler = (event) => {
     event.preventDefault();
-    const { signup, history } = this.props;
-    const updatedSignUpData = Object.assign({}, this.state);
-    const response = await signup(updatedSignUpData);
-    if (response === 'success') history.push('/login');
+    const { login, history } = this.props;
+    const updatedLoginData = Object.assign({}, this.state);
+    login(updatedLoginData, history);
+    // if (response === 'success') history.push('/login');
     // actions.signUpUser(updatedSignUpData);
     // this.setState({ password: '' });
 
@@ -36,22 +33,13 @@ class SignUpContainer extends React.Component {
     // } else {
   }
 
-  formHandler = () => {
-    const { signUpProcessMsg } = this.state;
-    const processMsgStatus = signUpProcessMsg;
-    this.setState({
-      // username: 'new state',
-      signUpProcessMsg: !processMsgStatus,
-    });
-  }
-
   render() {
     const { error, loading } = this.props;
     return (
       <React.Fragment>
-        <SignUp
+        <Login
           handleInputChange={this.inputChangedHandler}
-          submitUrl={this.signUpFormHandler}
+          submitUrl={this.loginFormHandler}
           error={error}
           loading={loading}
         />
@@ -62,14 +50,14 @@ class SignUpContainer extends React.Component {
 }
 
 
-SignUpContainer.propTypes = {
+LoginContainer.propTypes = {
   error: PropTypes.string,
+  history: PropTypes.shape({}).isRequired,
   loading: PropTypes.bool.isRequired,
-  signup: PropTypes.func.isRequired,
-  // actions: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
 };
 
-SignUpContainer.defaultProps = {
+LoginContainer.defaultProps = {
   error: '',
 };
 
@@ -80,8 +68,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // actions: bindActionCreators(signUpUser, dispatch),
-  signup: userDetails => dispatch(signUpUser(userDetails)),
+  login: (userDetails, history) => dispatch(loginUser(userDetails, history)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

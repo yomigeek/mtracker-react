@@ -2,7 +2,6 @@ import * as types from '../constants/actionTypes';
 
 const initialState = {
   loading: false,
-  error: '',
 };
 const loaderReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -10,7 +9,6 @@ const loaderReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        error: '',
       };
     case types.IS_COMPLETE:
       return {

@@ -12,6 +12,11 @@ const authReducer = (state = initialState, action) => {
         ...state,
         error,
       };
+    case types.AUTHENTICATION:
+      return {
+        ...state,
+        isAuthenticated: true,
+      };
     default:
       return state;
   }
