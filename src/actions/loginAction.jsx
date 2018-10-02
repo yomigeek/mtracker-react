@@ -17,6 +17,7 @@ const loginUser = (userDetails, history) => async (dispatch) => {
       apiUrl: '/auth/login',
       method: 'POST',
       data: userDetails,
+      headers: 'default',
     });
     dispatch(complete);
     if (response.status === 'fail') {
@@ -36,7 +37,8 @@ const loginUser = (userDetails, history) => async (dispatch) => {
       // return response;
     }
   } catch (err) {
-    console.log(err);
+    const errorMessage = 'Internet/Server Connection ERROR!';
+    dispatch({ type: types.VALIDATION_ERROR, errorMessage });
   }
   return null;
 };

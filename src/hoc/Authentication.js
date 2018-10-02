@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 
 const checkAuthentication = (WrappedComponent) => {
   class Authentication extends Component {
-    componentWillMount() {
+    componentDidMount() {
       const { history } = this.props;
       const token = localStorage.getItem('token');
       const authenticated = localStorage.getItem('authenticated');

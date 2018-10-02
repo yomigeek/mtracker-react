@@ -15,7 +15,7 @@ const Login = (props) => {
         <img src={logo} alt="" className="logo" />
       </p>
       <p className="app-name">M-Tracker</p>
-      {error ? (<p className="error">{error}</p>) : ''}
+      {error ? (<p className="error-account">{error}</p>) : ''}
       {loading
         ? (
           <p className="working-msg" id="signup-process">

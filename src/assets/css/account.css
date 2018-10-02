@@ -36,19 +36,7 @@
     font-weight: bold;
   }
   
-  .create-button {
-    background: #3BB75E;
-    border-radius: 5px;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: bold;
-    height: 42px;
-    text-align: center;
-    width: 170px;
-  }
-  
+
   .topnav {
     background-color: #fff;
   }
@@ -204,10 +192,6 @@
     border-radius: 100%;
   }
   
-  a {
-    text-decoration: none;
-  }
-  
   .form-link-color {
     color: #3BB75E;
   }
@@ -349,7 +333,7 @@
     text-align: center;
   }
   
-  .error{  
+  .error-account{  
     color: #b71c1c;
     text-align: center;
     font-size: 14px;
