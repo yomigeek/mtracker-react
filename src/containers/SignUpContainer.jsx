@@ -80,7 +80,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // actions: bindActionCreators(signUpUser, dispatch),
   signup: userDetails => dispatch(signUpUser(userDetails)),
 });
 

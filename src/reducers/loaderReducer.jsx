@@ -2,6 +2,7 @@ import * as types from '../constants/actionTypes';
 
 const initialState = {
   loading: false,
+  dashboardLoading: false,
 };
 const loaderReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -14,6 +15,12 @@ const loaderReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        dashboardLoading: false,
+      };
+    case types.DASHBOARD_LOADING:
+      return {
+        ...state,
+        dashboardLoading: true,
       };
     default:
       return state;

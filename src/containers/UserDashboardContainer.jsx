@@ -3,25 +3,36 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Footer from '../components/Footer';
 import UserDashboard from '../components/UserDashboard';
+import userRequests from '../actions/requestAction';
 
 class UserDashboardContainer extends React.Component {
  state = {
    username: '',
+   failedRequestMessage: '',
  }
 
- componentWillMount() {
+ componentWillMount = async () => {
    const newUsername = localStorage.getItem('username');
    this.setState({
      username: newUsername,
    });
+   const { getAllRequest } = await this.props;
+   const response = await getAllRequest();
+   if (response === 'fail') {
+     this.setState({
+       failedRequestMessage: 'User does not have a request yet!',
+     });
+   }
  }
 
  render() {
-   const { username } = this.state;
+   const { username, requestLoading, failedRequestMessage } = this.state;
    return (
      <React.Fragment>
        <UserDashboard
          username={username}
+         loading={requestLoading}
+         failedRequestMessage={failedRequestMessage}
        />
        <Footer />
      </React.Fragment>
@@ -30,5 +41,12 @@ class UserDashboardContainer extends React.Component {
  }
 }
 
+const mapStateToProps = state => ({
+  requestLoading: state.loader.dashboardLoading,
+});
 
-export default connect()(UserDashboardContainer);
+const mapDispatchToProps = dispatch => ({
+  getAllRequest: () => dispatch(userRequests()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserDashboardContainer);
