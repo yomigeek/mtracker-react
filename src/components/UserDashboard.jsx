@@ -9,7 +9,7 @@ import Navbar from './Navbar';
 
 const UserDashboard = (props) => {
   const {
-    username, loading, failedRequestMessage,
+    username, loading, failedRequestMessage, requests,
   } = props;
   return (
     <React.Fragment>
@@ -31,54 +31,71 @@ const UserDashboard = (props) => {
       <p className="form-footer">
         <b className="form-link-color"> Select Menu: </b>
         <select className="select" name="forma">
-          <option value="user_dashboard.html">MY REQUESTS</option>
+          <option value="/dashboard">MY REQUESTS</option>
         </select>
 
       </p>
       <p>
-        <Link to="/create_request_user">
+        <Link to="/create-a-request">
           <button className="create-button" type="button">Create-A-Request</button>
         </Link>
       </p>
 
       <div align="center">
-        <input type="text" id="myfilter" onKeyUp="myFilterTableFunction()" placeholder="Filter by names,ID,title..." title="Type in a name" />
+        <input type="text" id="myfilter" placeholder="Filter by names,ID,title..." title="Type in a name" />
       </div>
       {failedRequestMessage ? (<p className="error">{failedRequestMessage}</p>) : ''}
-
-      <table id="request-table">
-
-        <thead>
-          <tr>
-            <th>S/N</th>
-            <th>Request ID</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Priority</th>
-            <th>Action</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td data-column="S/N" />
-            <td data-column="Request ID" />
-            <td data-column="Title" />
-            <td data-column="Description" />
-            <td data-column="Priority" />
-            <td data-column="Action" id="action-row" />
-
-          </tr>
-        </tbody>
-      </table>
       {loading
         ? (
           <div className="request-loader-container">
             <img className="loader-img" src={loader} alt="" />
-            <p>...Loading Requests....</p>
+            <p>...Loading Requests...</p>
           </div>
-        ) : ''
+        ) : (
+
+          <table id="request-table">
+            <thead>
+              <tr>
+                <th>S/N</th>
+                <th>Request ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Action</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {requests.map((userRequest, index) => {
+                let serialNumber = index;
+                serialNumber += 1;
+                return (
+                  <tr key={serialNumber}>
+                    <td data-column="S/N">{serialNumber}</td>
+                    <td data-column="Request ID">{userRequest.id}</td>
+                    <td data-column="Title">{userRequest.title}</td>
+                    <td data-column="Description">{userRequest.description}</td>
+                    <td data-column="Priority">{userRequest.priority}</td>
+                    <td data-column="Action" id="action-row">
+                      {userRequest.status === 1
+                        ? (
+                          <Link to="edit_request_user.html?requestId=' + requests.id + ' ">
+                            <button className="edit-button" type="button">
+                            View / Edit
+                            </button>
+                          </Link>
+                        )
+                        : '' }
+                    </td>
+                  </tr>
+                );
+              })
+              }
+            </tbody>
+          </table>
+        )
       }
+
 
     </React.Fragment>
   );
@@ -88,12 +105,14 @@ UserDashboard.propTypes = {
   username: PropTypes.string,
   loading: PropTypes.bool,
   failedRequestMessage: PropTypes.string,
+  requests: PropTypes.instanceOf(Array),
 };
 
 UserDashboard.defaultProps = {
   username: '',
   loading: false,
   failedRequestMessage: '',
+  requests: [],
 };
 
 export default UserDashboard;
