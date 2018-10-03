@@ -1,9 +1,9 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Footer from '../components/Footer';
 import UserDashboard from '../components/UserDashboard';
-import userRequests from '../actions/requestAction';
+import { userRequests } from '../actions/requestAction';
 
 class UserDashboardContainer extends React.Component {
  state = {
@@ -11,28 +11,34 @@ class UserDashboardContainer extends React.Component {
    failedRequestMessage: '',
  }
 
- componentWillMount = async () => {
+ componentDidMount = async () => {
    const newUsername = localStorage.getItem('username');
    this.setState({
      username: newUsername,
    });
-   const { getAllRequest } = await this.props;
+   const { getAllRequest } = this.props;
    const response = await getAllRequest();
    if (response === 'fail') {
-     this.setState({
-       failedRequestMessage: 'User does not have a request yet!',
-     });
+     this.setFail();
    }
  }
 
+ setFail = () => {
+   this.setState({
+     failedRequestMessage: 'User does not have a request yet!',
+   });
+ };
+
  render() {
-   const { username, requestLoading, failedRequestMessage } = this.state;
+   const { username, failedRequestMessage } = this.state;
+   const { requestLoading, allUserRequests } = this.props;
    return (
      <React.Fragment>
        <UserDashboard
          username={username}
          loading={requestLoading}
          failedRequestMessage={failedRequestMessage}
+         requests={allUserRequests}
        />
        <Footer />
      </React.Fragment>
@@ -41,8 +47,18 @@ class UserDashboardContainer extends React.Component {
  }
 }
 
+UserDashboardContainer.propTypes = {
+  requestLoading: PropTypes.bool.isRequired,
+  allUserRequests: PropTypes.instanceOf(Array),
+};
+
+UserDashboardContainer.defaultProps = {
+  allUserRequests: [],
+};
+
 const mapStateToProps = state => ({
   requestLoading: state.loader.dashboardLoading,
+  allUserRequests: state.request.allRequests,
 });
 
 const mapDispatchToProps = dispatch => ({
