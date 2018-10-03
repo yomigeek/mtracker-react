@@ -3,6 +3,7 @@ import * as types from '../constants/actionTypes';
 const initialState = {
   message: '',
   allRequests: [],
+  singleRequest: {},
 };
 const requestReducer = (state = initialState, action) => {
   const { type, message, payload } = action;
@@ -16,6 +17,16 @@ const requestReducer = (state = initialState, action) => {
       return {
         ...state,
         allRequests: payload,
+      };
+    case types.GET_SINGLE_REQUEST_SUCCESS:
+      return {
+        ...state,
+        singleRequest: payload,
+      };
+    case types.UPDATE_REQUEST_SUCCESS:
+      return {
+        ...state,
+        message,
       };
     default:
       return state;

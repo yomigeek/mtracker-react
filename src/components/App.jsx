@@ -7,6 +7,7 @@ import LoginContainer from '../containers/LoginContainer';
 import UserDashboardContainer from '../containers/UserDashboardContainer';
 import checkAuthentication from '../hoc/Authentication';
 import CreateRequestContainer from '../containers/CreateRequestContainer';
+import EditRequestContainer from '../containers/EditRequestContainer';
 
 const App = () => (
   <div>
@@ -16,6 +17,7 @@ const App = () => (
       <Route exact path="/login" component={LoginContainer} />
       <Route exact path="/dashboard" component={checkAuthentication(UserDashboardContainer)} />
       <Route exact path="/create-a-request" component={checkAuthentication(CreateRequestContainer)} />
+      <Route exact path="/edit-request/:requestId" component={checkAuthentication(EditRequestContainer)} />
       <Route to="*" component={Page404} />
     </Switch>
   </div>
