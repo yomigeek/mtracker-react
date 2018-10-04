@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import loader from '../assets/images/loader.gif';
-import pageLogo from '../assets/images/details.png';
 import backIcon from '../assets/images/back_icon.png';
 import '../assets/css/dashboard.css';
 import Aux from '../hoc/Aux';

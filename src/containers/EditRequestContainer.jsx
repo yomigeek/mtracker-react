@@ -23,22 +23,20 @@ class EditRequestContainer extends React.Component {
    * @returns {null}
    */
   componentDidMount = () => {
-    const { match, fetchSingleRequest, singleRequest } = this.props;
+    const { match, fetchSingleRequest } = this.props;
     const { request } = this.state;
     const { requestId } = match.params;
     fetchSingleRequest(requestId)
-      .then(newres => this.setAppState(request, newres));
-    // console.log(newres, 'hhhhhh');
-    // this.setState({ request: { ...request, ...newres } });
-    // this.setState({ request: { ...request, title: newres.title } });
-    // this.setState({
-    //   request
-    // });
-    // this.setState({ singleRequest: { ...singleRequest, }});
+      .then(newresponse => this.setRequestState(request, newresponse));
   }
 
-  setAppState = (request, newres) => {
-    this.setState({ request: { ...request, ...newres } });
+  /**
+   * @description Handles the setting of the request state
+   * @param {Object} request The request object
+   * @param {Object} newRequest The returned request object
+   */
+  setRequestState = (request, newRequest) => {
+    this.setState({ request: { ...request, ...newRequest } });
   };
 
   /**
@@ -47,12 +45,15 @@ class EditRequestContainer extends React.Component {
    */
   inputChangedHandler = (event) => {
     const { request } = this.state;
-    // debugger;
     this.setState({ request: { ...request, [event.target.id]: event.target.value } });
-    // this.setState({ [event.target.id]: event.target.value });
   }
 
-  editRequestFormHandler = async (event) => {
+  /**
+   * @description Handles the request update process
+   * @returns {null}
+   */
+
+  updateRequestFormHandler = (event) => {
     event.preventDefault();
     const { match, updateSingleRequest } = this.props;
     const { requestId } = match.params;
@@ -66,8 +67,6 @@ class EditRequestContainer extends React.Component {
     } = this.props;
     const { request } = this.state;
     const errorMessage = 'This Request does not exist!';
-    // console.log(request, 'request');
-    // console.log(singleRequest, 'single request');
 
     return (
       <React.Fragment>
@@ -76,7 +75,7 @@ class EditRequestContainer extends React.Component {
           singleRequest.title ? (
             <EditRequest
               handleInputChange={this.inputChangedHandler}
-              submitUrl={this.editRequestFormHandler}
+              submitUrl={this.updateRequestFormHandler}
               error={error}
               loading={loading}
               message={requestMessage}
@@ -110,15 +109,17 @@ class EditRequestContainer extends React.Component {
 EditRequestContainer.propTypes = {
   error: PropTypes.string,
   loading: PropTypes.bool.isRequired,
-  // createARequest: PropTypes.func.isRequired,
+  fetchSingleRequest: PropTypes.func.isRequired,
+  updateSingleRequest: PropTypes.func.isRequired,
   requestMessage: PropTypes.string,
   singleRequest: PropTypes.instanceOf(Object),
+  match: PropTypes.instanceOf(Object).isRequired,
 };
 
 EditRequestContainer.defaultProps = {
   error: '',
   requestMessage: '',
-  // singleRequest: {},
+  singleRequest: {},
 };
 
 

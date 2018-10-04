@@ -102,8 +102,7 @@ const updateRequestAction = (requestId, requestDetails) => async (dispatch) => {
   let message = '';
   dispatch(dashboardLoader);
   dispatch({ type: types.VALIDATION_ERROR, error });
-  console.log(requestDetails, 'details');
-  console.log(requestDetails.request.title, 'title');
+  dispatch({ type: types.UPDATE_REQUEST_SUCCESS, message });
   try {
     const response = await fetchData({
       apiUrl: `/users/requests/${requestId}`,
@@ -112,7 +111,6 @@ const updateRequestAction = (requestId, requestDetails) => async (dispatch) => {
       headerType: 'token-type',
     });
     dispatch(complete);
-    console.log(response, 'final res');
     if (response.status === 'fail') {
       error = response.message;
       dispatch({ type: types.VALIDATION_ERROR, error });
