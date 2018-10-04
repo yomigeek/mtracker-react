@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
 import Footer from '../components/Footer';
 import SignUp from '../components/SignUp';
 import signUpUser from '../actions/signUpAction';
@@ -34,15 +33,6 @@ class SignUpContainer extends React.Component {
     // if (updatedSignUpData.department === '') {
     //   console.log('Department cannot be empty!');
     // } else {
-  }
-
-  formHandler = () => {
-    const { signUpProcessMsg } = this.state;
-    const processMsgStatus = signUpProcessMsg;
-    this.setState({
-      // username: 'new state',
-      signUpProcessMsg: !processMsgStatus,
-    });
   }
 
   render() {

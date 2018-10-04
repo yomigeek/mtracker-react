@@ -79,9 +79,9 @@ const UserDashboard = (props) => {
                     <td data-column="Action" id="action-row">
                       {userRequest.status === 1
                         ? (
-                          <Link to="edit_request_user.html?requestId=' + requests.id + ' ">
+                          <Link to={`/edit-request/${userRequest.id}`}>
                             <button className="edit-button" type="button">
-                            View / Edit
+                            Edit
                             </button>
                           </Link>
                         )

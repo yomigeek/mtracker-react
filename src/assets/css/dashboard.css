@@ -112,6 +112,19 @@ h5 {
   word-wrap: break-word;
 }
 
+.request-id-container {
+  text-align: center;
+}
+.edit-form {
+  margin: 0 auto;
+  width: 320px;
+  height: 360px;
+  padding: 20px;
+  background: #f4f4f4;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
 .form-footer {
   font-size: 15px;
   margin-bottom: 35px;
@@ -214,17 +227,6 @@ a:hover {
   font-size: 1.2rem;
   line-height: 1.2;
   margin: 0;
-  text-align: center;
-}
-
-.footer {
-  color: #011b33;
-  font-family: "Boing", sans-serif;
-  font-size: 0.8rem;
-  font-weight: bold;
-  line-height: 1.2;
-  margin: 0;
-  margin-bottom: 25px;
   text-align: center;
 }
 
