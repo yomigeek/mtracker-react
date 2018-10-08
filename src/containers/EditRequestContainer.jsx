@@ -63,14 +63,14 @@ class EditRequestContainer extends React.Component {
 
   render() {
     const {
-      error, loading, requestMessage, singleRequest,
+      error, loading, requestMessage, singleRequest, history,
     } = this.props;
     const { request } = this.state;
     const errorMessage = 'This Request does not exist!';
 
     return (
       <React.Fragment>
-        <Navbar />
+        <Navbar history={history} />
         {
           singleRequest.title ? (
             <EditRequest
@@ -114,6 +114,7 @@ EditRequestContainer.propTypes = {
   requestMessage: PropTypes.string,
   singleRequest: PropTypes.instanceOf(Object),
   match: PropTypes.instanceOf(Object).isRequired,
+  history: PropTypes.shape({}).isRequired,
 };
 
 EditRequestContainer.defaultProps = {
