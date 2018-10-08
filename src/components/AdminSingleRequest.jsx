@@ -7,7 +7,7 @@ import '../assets/css/pages.css';
 
 const AdminSingleRequest = (props) => {
   const {
-    requestDetail, loading, approveRequest, message, error, declineRequest,
+    requestDetail, loading, approveRequest, message, error, declineRequest, resolveRequest,
   } = props;
   return (
     <React.Fragment>
@@ -98,19 +98,33 @@ const AdminSingleRequest = (props) => {
             {requestDetail.priority}
           </font>
         </p>
-        {requestDetail.status === 2 || requestDetail.status === 3
+        {requestDetail.status === 2
           ? (
             <React.Fragment>
-              <button className="approve-button" type="button" onClick={approveRequest}>Approve Request</button>
+              <button className="resolve-button" type="button" onClick={resolveRequest}>Resolve Request</button>
               <button className="decline-button" type="button" onClick={declineRequest}>Decline Request</button>
             </React.Fragment>
           )
 
-          : (
+          : ''
+          }
+        {requestDetail.status === 3
+          ? (
             <React.Fragment>
-              <button className="resolve-button" type="button">Resolve Request</button>
+              <button className="approve-button" type="button" onClick={approveRequest}>Approve Request</button>
             </React.Fragment>
           )
+
+          : ''
+          }
+        {requestDetail.status === 4
+          ? (
+            <React.Fragment>
+              <p className="resolve-msg">Request has already been resolved!</p>
+            </React.Fragment>
+          )
+
+          : ''
           }
       </div>
 
@@ -123,6 +137,7 @@ AdminSingleRequest.propTypes = {
   requestDetail: PropTypes.instanceOf(Object).isRequired,
   loading: PropTypes.bool,
   approveRequest: PropTypes.func,
+  resolveRequest: PropTypes.func,
   declineRequest: PropTypes.func,
   message: PropTypes.string,
   error: PropTypes.string,
@@ -135,6 +150,8 @@ AdminSingleRequest.defaultProps = {
   approveRequest: () => {
   },
   declineRequest: () => {
+  },
+  resolveRequest: () => {
   },
 };
 

@@ -405,14 +405,20 @@ textarea, select {
   height: 15px;
 }
 .error{
-   
   color: #b71c1c;
   text-align: center;
   font-size: 14px;
   margin-top: 60px;
   margin-bottom: 50px;
   font-weight: bold;
-
+}
+.resolve-msg{
+  color: #011b33;
+  text-align: center;
+  font-size: 15px;
+  margin-top: 40px;
+  margin-bottom: 30px;
+  font-weight: bold;
 }
 .request-detail-value {
   font-size: 14px;
