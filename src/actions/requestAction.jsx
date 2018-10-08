@@ -8,15 +8,26 @@ const complete = {
   type: types.IS_COMPLETE,
 };
 
-const userRequests = () => async (dispatch) => {
+const userRequests = role => async (dispatch) => {
   const error = '';
   dispatch(dashboardLoader);
   dispatch({ type: types.VALIDATION_ERROR, error });
   try {
-    const response = await fetchData({
-      apiUrl: '/users/requests',
-      headerType: 'token-type',
-    });
+    let response;
+    console.log(typeof role);
+    if (role === 'admin') {
+      response = await fetchData({
+        apiUrl: '/requests',
+        headerType: 'token-type',
+      });
+      console.log(response);
+    }
+    if (role === 'user') {
+      response = await fetchData({
+        apiUrl: '/users/requests',
+        headerType: 'token-type',
+      });
+    }
     dispatch(complete);
     if (response.status === 'fail') {
       return response.status;

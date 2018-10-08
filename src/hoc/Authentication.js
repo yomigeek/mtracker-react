@@ -20,7 +20,7 @@ const checkAuthentication = (WrappedComponent) => {
       if (checkTokenExpiryDate <= 0) {
         history.push('/login');
       }
-      if (role !== 'user') {
+      if (role !== 'user' && role !== 'admin') {
         history.push('/login');
       }
     }
