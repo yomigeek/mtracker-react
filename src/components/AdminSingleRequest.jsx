@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import backIcon from '../assets/images/back_icon.png';
+import loader from '../assets/images/loader.gif';
 import '../assets/css/pages.css';
 
 const AdminSingleRequest = (props) => {
   const {
-    requestDetail,
+    requestDetail, loading, approveRequest, message, error,
   } = props;
   return (
     <React.Fragment>
@@ -23,7 +24,21 @@ const AdminSingleRequest = (props) => {
         </Link>
 
       </p>
-
+      {loading
+        ? (
+          <div className="request-loader-container">
+            <img className="loader-img" src={loader} alt="" />
+            <p>...Working On Request...</p>
+          </div>
+        ) : false
+      }
+      {message ? (<p className="dashboard-message">{message}</p>) : ''}
+      {error ? (
+        <p className="error">
+          {error}
+        . Either due to network or it has already been approved.
+        </p>
+      ) : ''}
       <div className="details-container details-panel-header" id="request-details-box">
 
         <p>
@@ -83,7 +98,7 @@ const AdminSingleRequest = (props) => {
         {requestDetail.status === 1 || requestDetail.status === 2
           ? (
             <React.Fragment>
-              <button className="approve-button" type="button">Approve Request</button>
+              <button className="approve-button" type="button" onClick={approveRequest}>Approve Request</button>
               <button className="decline-button" type="button">Decline Request</button>
             </React.Fragment>
           )
@@ -107,6 +122,16 @@ const AdminSingleRequest = (props) => {
 
 AdminSingleRequest.propTypes = {
   requestDetail: PropTypes.instanceOf(Object).isRequired,
+  loading: PropTypes.bool,
+  approveRequest: PropTypes.func.isRequired,
+  message: PropTypes.string,
+  error: PropTypes.string,
+};
+
+AdminSingleRequest.defaultProps = {
+  loading: false,
+  message: '',
+  error: '',
 };
 
 export default AdminSingleRequest;

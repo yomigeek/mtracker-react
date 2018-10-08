@@ -28,6 +28,11 @@ const requestReducer = (state = initialState, action) => {
         ...state,
         message,
       };
+    case types.APPROVE_REQUEST_SUCCESS:
+      return {
+        ...state,
+        message,
+      };
     default:
       return state;
   }

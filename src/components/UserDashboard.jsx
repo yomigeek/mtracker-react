@@ -26,13 +26,6 @@ const UserDashboard = (props) => {
         My Requests
 
       </h4>
-      <p className="form-footer">
-        <b className="form-link-color"> Select Menu: </b>
-        <select className="select" name="forma">
-          <option value="/dashboard">MY REQUESTS</option>
-        </select>
-
-      </p>
       <p>
         <Link to="/create-a-request">
           <button className="create-button" type="button">Create-A-Request</button>
@@ -59,6 +52,7 @@ const UserDashboard = (props) => {
                 <th>Title</th>
                 <th>Description</th>
                 <th>Priority</th>
+                <th>Status</th>
                 <th>Action</th>
 
               </tr>
@@ -74,6 +68,7 @@ const UserDashboard = (props) => {
                     <td data-column="Title">{userRequest.title}</td>
                     <td data-column="Description">{userRequest.description}</td>
                     <td data-column="Priority">{userRequest.priority}</td>
+                    <td data-column="Status">{userRequest.values}</td>
                     <td data-column="Action" id="action-row">
                       {userRequest.status === 1
                         ? (
