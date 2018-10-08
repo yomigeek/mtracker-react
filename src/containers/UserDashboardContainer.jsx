@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Footer from '../components/Footer';
 import UserDashboard from '../components/UserDashboard';
 import { userRequests } from '../actions/requestAction';
-import Navbar from '../components/Navbar';
 
 class UserDashboardContainer extends React.Component {
  state = {
@@ -35,7 +34,6 @@ class UserDashboardContainer extends React.Component {
    const { requestLoading, allUserRequests, history } = this.props;
    return (
      <React.Fragment>
-       <Navbar history={history} />
        <UserDashboard
          username={username}
          loading={requestLoading}

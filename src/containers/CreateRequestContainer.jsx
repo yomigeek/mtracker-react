@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Footer from '../components/Footer';
 import { createRequestAction } from '../actions/requestAction';
 import CreateRequest from '../components/CreateRequest';
-import Navbar from '../components/Navbar';
 
 class CreateRequestContainer extends React.Component {
  state = {
@@ -33,7 +32,6 @@ class CreateRequestContainer extends React.Component {
     const { error, loading, requestMessage } = this.props;
     return (
       <React.Fragment>
-        <Navbar />
         <CreateRequest
           handleInputChange={this.inputChangedHandler}
           submitUrl={this.createRequestFormHandler}

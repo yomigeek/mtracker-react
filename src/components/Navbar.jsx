@@ -7,7 +7,7 @@ import logout from '../actions/logoutAction';
 class Navbar extends React.Component {
   state = {}
 
-  log = (event) => {
+  logUserOut = (event) => {
     event.preventDefault();
     const { logoutUser, history } = this.props;
     logoutUser();
@@ -15,13 +15,16 @@ class Navbar extends React.Component {
   }
 
   render() {
+    const { role } = this.props;
     return (
       <React.Fragment>
         <div className="topnav">
           <p>M-Tracker - Dashboard</p>
 
-          <button className="logout-button" type="button" onClick={this.log}>Logout</button>
-          <Link to="/dashboard">Home</Link>
+          <button className="logout-button" type="button" onClick={this.logUserOut}>Logout</button>
+          <Link to={role === 'user' ? '/dashboard' : '/admin-dashboard'}>
+          Home
+          </Link>
 
         </div>
       </React.Fragment>
@@ -32,6 +35,7 @@ class Navbar extends React.Component {
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   history: PropTypes.shape({}).isRequired,
+  role: PropTypes.string.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
