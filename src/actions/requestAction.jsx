@@ -96,11 +96,14 @@ const fetchASingleRequest = requestId => async (dispatch) => {
     if (response.status === 'fail') {
       return response.status;
     }
-    dispatch({
-      type: types.GET_SINGLE_REQUEST_SUCCESS,
-      payload: response.data.requests,
-    });
-
+    if (response.status === 'success') {
+      dispatch({
+        type: types.GET_SINGLE_REQUEST_SUCCESS,
+        payload: response.data.requests,
+      });
+      localStorage.setItem('lastViewedUsername', response.data.requests.username);
+      return response.status;
+    }
     return response.data.requests;
   } catch (err) {
     console.log(err);
@@ -144,6 +147,49 @@ const updateRequestAction = (requestId, requestDetails) => async (dispatch) => {
   return null;
 };
 
+const approveRequestAction = requestId => async (dispatch) => {
+  let error = '';
+  let message = '';
+  dispatch(dashboardLoader);
+  dispatch({ type: types.VALIDATION_ERROR, error });
+  dispatch({ type: types.APPROVE_REQUEST_SUCCESS, message });
+  try {
+    const response = await fetchData({
+      apiUrl: `/requests/${requestId}/approve`,
+      method: 'PUT',
+      headerType: 'token-type',
+    });
+    dispatch(complete);
+    if (response.status === 'fail') {
+      error = response.message;
+      dispatch({ type: types.VALIDATION_ERROR, error });
+      return response;
+    }
+    if (response.status === 'success') {
+      message = 'This Request has been Approved Succesfully!';
+      dispatch({ type: types.VALIDATION_ERROR, error });
+      dispatch({ type: types.APPROVE_REQUEST_SUCCESS, message });
+      const viewedUsername = localStorage.getItem('lastViewedUsername');
+      dispatch({
+        type: types.GET_SINGLE_REQUEST_SUCCESS,
+        payload: {
+          id: response.data.id,
+          title: response.data.title,
+          username: viewedUsername,
+          values: 'approved',
+          description: response.data.description,
+          priority: response.data.priority,
+        },
+      });
+      return response.status;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+
+  return null;
+};
+
 export {
-  userRequests, createRequestAction, fetchASingleRequest, updateRequestAction,
+  userRequests, createRequestAction, fetchASingleRequest, updateRequestAction, approveRequestAction,
 };

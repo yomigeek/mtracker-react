@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Footer from '../components/Footer';
-import { fetchASingleRequest } from '../actions/requestAction';
+import { fetchASingleRequest, approveRequestAction } from '../actions/requestAction';
 import Navbar from '../components/Navbar';
 import PageError from '../components/PageError';
 import loader from '../assets/images/loader.gif';
@@ -13,7 +13,7 @@ class AdminSingleRequestContainer extends React.Component {
    * @description Fetches the request information with the given Id from the API
    * @returns {null}
    */
-  componentDidMount = async () => {
+  componentWillMount = async () => {
     const { match, fetchSingleRequest } = this.props;
     const { requestId } = match.params;
     await fetchSingleRequest(requestId);
@@ -25,6 +25,9 @@ class AdminSingleRequestContainer extends React.Component {
    */
   approveRequestHandler = (event) => {
     event.preventDefault();
+    const { match, approveRequest } = this.props;
+    const { requestId } = match.params;
+    approveRequest(requestId);
   }
 
   /**
@@ -45,7 +48,7 @@ class AdminSingleRequestContainer extends React.Component {
 
   render() {
     const {
-      loading, requestMessage, singleRequest, history,
+      loading, requestMessage, singleRequest, history, error,
     } = this.props;
     const errorMessage = 'This Request does not exist!';
 
@@ -61,6 +64,7 @@ class AdminSingleRequestContainer extends React.Component {
               loading={loading}
               message={requestMessage}
               requestDetail={singleRequest}
+              error={error}
             />
           ) : (
             <React.Fragment>
@@ -90,15 +94,20 @@ class AdminSingleRequestContainer extends React.Component {
 AdminSingleRequestContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   fetchSingleRequest: PropTypes.func.isRequired,
+  approveRequest: PropTypes.func,
   requestMessage: PropTypes.string,
   singleRequest: PropTypes.instanceOf(Object),
   match: PropTypes.instanceOf(Object).isRequired,
   history: PropTypes.shape({}).isRequired,
+  error: PropTypes.string,
 };
 
 AdminSingleRequestContainer.defaultProps = {
   requestMessage: '',
   singleRequest: {},
+  error: '',
+  approveRequest: () => {
+  },
 };
 
 
@@ -111,6 +120,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchSingleRequest: requestId => dispatch(fetchASingleRequest(requestId)),
+  approveRequest: requestId => dispatch(approveRequestAction(requestId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminSingleRequestContainer);
