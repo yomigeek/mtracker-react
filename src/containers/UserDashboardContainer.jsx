@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Footer from '../components/Footer';
 import UserDashboard from '../components/UserDashboard';
 import { userRequests } from '../actions/requestAction';
+import Navbar from '../components/Navbar';
 
 class UserDashboardContainer extends React.Component {
  state = {
@@ -31,14 +32,16 @@ class UserDashboardContainer extends React.Component {
 
  render() {
    const { username, failedRequestMessage } = this.state;
-   const { requestLoading, allUserRequests } = this.props;
+   const { requestLoading, allUserRequests, history } = this.props;
    return (
      <React.Fragment>
+       <Navbar history={history} />
        <UserDashboard
          username={username}
          loading={requestLoading}
          failedRequestMessage={failedRequestMessage}
          requests={allUserRequests}
+         history={history}
        />
        <Footer />
      </React.Fragment>
@@ -50,6 +53,7 @@ class UserDashboardContainer extends React.Component {
 UserDashboardContainer.propTypes = {
   requestLoading: PropTypes.bool.isRequired,
   allUserRequests: PropTypes.instanceOf(Array),
+  history: PropTypes.shape({}).isRequired,
 };
 
 UserDashboardContainer.defaultProps = {

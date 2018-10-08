@@ -5,7 +5,6 @@ import logo from '../assets/images/logo.png';
 import logIcon from '../assets/images/log-icon.png';
 import loader from '../assets/images/loader.gif';
 import '../assets/css/dashboard.css';
-import Navbar from './Navbar';
 
 const UserDashboard = (props) => {
   const {
@@ -13,7 +12,6 @@ const UserDashboard = (props) => {
   } = props;
   return (
     <React.Fragment>
-      <Navbar />
       <p className="photo-container">
         <img src={logo} className="profile-photo" alt="" />
       </p>
@@ -106,6 +104,7 @@ UserDashboard.propTypes = {
   loading: PropTypes.bool,
   failedRequestMessage: PropTypes.string,
   requests: PropTypes.instanceOf(Array),
+  history: PropTypes.shape({}).isRequired,
 };
 
 UserDashboard.defaultProps = {
