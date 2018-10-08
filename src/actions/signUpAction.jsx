@@ -36,14 +36,6 @@ const signUpUser = userDetails => async (dispatch) => {
   }
 
   return null;
-  // if (response.status === 200) {
-  //   // localStorage.setItem('token', response.data.user.token);
-  //   // localStorage.setItem('username', response.data.user.username);
-  //   dispatch(userSignUpSuccessful(userDetails));
-  //   // dispatch({ type: LOGIN_SUCCESSFUL, user: response.data.user });
-  //   return history.push('/');
-  // }
-  // return dispatch(userSignUpSuccessful(userDetails));
 };
 
 export default signUpUser;

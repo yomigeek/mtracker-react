@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Footer from '../components/Footer';
-import { fetchASingleRequest, approveRequestAction, declineRequestAction } from '../actions/requestAction';
+import { fetchASingleRequest, requestAction } from '../actions/requestAction';
 import PageError from '../components/PageError';
 import loader from '../assets/images/loader.gif';
 import AdminSingleRequest from '../components/AdminSingleRequest';
@@ -26,7 +26,7 @@ class AdminSingleRequestContainer extends React.Component {
     event.preventDefault();
     const { match, approveRequest } = this.props;
     const { requestId } = match.params;
-    approveRequest(requestId);
+    approveRequest(requestId, 'approve');
   }
 
   /**
@@ -37,7 +37,7 @@ class AdminSingleRequestContainer extends React.Component {
     event.preventDefault();
     const { match, declineRequest } = this.props;
     const { requestId } = match.params;
-    declineRequest(requestId);
+    declineRequest(requestId, 'decline');
   }
 
   /**
@@ -46,6 +46,9 @@ class AdminSingleRequestContainer extends React.Component {
    */
   resolveRequestHandler = (event) => {
     event.preventDefault();
+    const { match, resolveRequest } = this.props;
+    const { requestId } = match.params;
+    resolveRequest(requestId, 'resolve');
   }
 
   render() {
@@ -97,6 +100,7 @@ AdminSingleRequestContainer.propTypes = {
   fetchSingleRequest: PropTypes.func.isRequired,
   approveRequest: PropTypes.func,
   declineRequest: PropTypes.func,
+  resolveRequest: PropTypes.func,
   requestMessage: PropTypes.string,
   singleRequest: PropTypes.instanceOf(Object),
   match: PropTypes.instanceOf(Object).isRequired,
@@ -112,6 +116,8 @@ AdminSingleRequestContainer.defaultProps = {
   },
   declineRequest: () => {
   },
+  resolveRequest: () => {
+  },
 };
 
 
@@ -124,9 +130,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchSingleRequest: requestId => dispatch(fetchASingleRequest(requestId)),
-  approveRequest: requestId => dispatch(approveRequestAction(requestId)),
-  declineRequest: requestId => dispatch(declineRequestAction(requestId)),
-
+  approveRequest: (requestId, action) => dispatch(requestAction(requestId, action)),
+  declineRequest: (requestId, action) => dispatch(requestAction(requestId, action)),
+  resolveRequest: (requestId, action) => dispatch(requestAction(requestId, action)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminSingleRequestContainer);

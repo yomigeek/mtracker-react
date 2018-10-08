@@ -37,7 +37,8 @@ const userRequests = role => async (dispatch) => {
     });
     return response.data.requests;
   } catch (err) {
-    console.log(err);
+    const errorMessage = 'NETWORK/SERVER ERROR!';
+    dispatch({ type: types.VALIDATION_ERROR, errorMessage });
   }
   return null;
 };
@@ -68,7 +69,8 @@ const createRequestAction = requestDetails => async (dispatch) => {
       return response.status;
     }
   } catch (err) {
-    console.log(err);
+    const errorMessage = 'NETWORK/SERVER ERROR!';
+    dispatch({ type: types.VALIDATION_ERROR, errorMessage });
   }
 
   return null;
@@ -76,8 +78,10 @@ const createRequestAction = requestDetails => async (dispatch) => {
 
 const fetchASingleRequest = requestId => async (dispatch) => {
   const error = '';
+  const message = '';
   dispatch({ type: types.VALIDATION_ERROR, error });
   dispatch(dashboardLoader);
+  dispatch({ type: types.APPROVE_REQUEST_SUCCESS, message });
   try {
     let response;
     if (userRole === 'admin') {
@@ -106,7 +110,8 @@ const fetchASingleRequest = requestId => async (dispatch) => {
     }
     return response.data.requests;
   } catch (err) {
-    console.log(err);
+    const errorMessage = 'NETWORK/SERVER ERROR!';
+    dispatch({ type: types.VALIDATION_ERROR, errorMessage });
   }
   return null;
 };
@@ -141,21 +146,44 @@ const updateRequestAction = (requestId, requestDetails) => async (dispatch) => {
       return response.status;
     }
   } catch (err) {
-    console.log(err);
+    const errorMessage = 'NETWORK/SERVER ERROR!';
+    dispatch({ type: types.VALIDATION_ERROR, errorMessage });
   }
 
   return null;
 };
 
-const approveRequestAction = requestId => async (dispatch) => {
+const requestAction = (requestId, action) => async (dispatch) => {
   let error = '';
   let message = '';
   dispatch(dashboardLoader);
   dispatch({ type: types.VALIDATION_ERROR, error });
   dispatch({ type: types.APPROVE_REQUEST_SUCCESS, message });
+  let apiUrl;
+  let completeActionMessage;
+  let actionValue;
+  let actionStatusValue;
+  if (action === 'decline') {
+    apiUrl = `/requests/${requestId}/disapprove`;
+    completeActionMessage = 'This Request has been Declined Succesfully!';
+    actionValue = 'declined';
+    actionStatusValue = 3;
+  }
+  if (action === 'resolve') {
+    apiUrl = `/requests/${requestId}/resolve`;
+    completeActionMessage = 'This Request has been Resolved Succesfully!';
+    actionValue = 'resolved';
+    actionStatusValue = 4;
+  }
+  if (action === 'approve') {
+    apiUrl = `/requests/${requestId}/approve`;
+    completeActionMessage = 'This Request has been Approved Succesfully!';
+    actionValue = 'approved';
+    actionStatusValue = 2;
+  }
   try {
     const response = await fetchData({
-      apiUrl: `/requests/${requestId}/approve`,
+      apiUrl,
       method: 'PUT',
       headerType: 'token-type',
     });
@@ -166,7 +194,7 @@ const approveRequestAction = requestId => async (dispatch) => {
       return response;
     }
     if (response.status === 'success') {
-      message = 'This Request has been Approved Succesfully!';
+      message = completeActionMessage;
       dispatch({ type: types.VALIDATION_ERROR, error });
       dispatch({ type: types.APPROVE_REQUEST_SUCCESS, message });
       const viewedUsername = localStorage.getItem('lastViewedUsername');
@@ -176,66 +204,22 @@ const approveRequestAction = requestId => async (dispatch) => {
           id: response.data.id,
           title: response.data.title,
           username: viewedUsername,
-          values: 'approved',
+          values: actionValue,
           description: response.data.description,
           priority: response.data.priority,
-          status: 2,
+          status: actionStatusValue,
         },
       });
       return response.status;
     }
   } catch (err) {
-    console.log(err);
-  }
-
-  return null;
-};
-
-const declineRequestAction = requestId => async (dispatch) => {
-  let error = '';
-  let message = '';
-  dispatch(dashboardLoader);
-  dispatch({ type: types.VALIDATION_ERROR, error });
-  dispatch({ type: types.APPROVE_REQUEST_SUCCESS, message });
-  try {
-    const response = await fetchData({
-      apiUrl: `/requests/${requestId}/disapprove`,
-      method: 'PUT',
-      headerType: 'token-type',
-    });
-    dispatch(complete);
-    if (response.status === 'fail') {
-      error = response.message;
-      dispatch({ type: types.VALIDATION_ERROR, error });
-      return response;
-    }
-    if (response.status === 'success') {
-      message = 'This Request has been Declined Succesfully!';
-      dispatch({ type: types.VALIDATION_ERROR, error });
-      dispatch({ type: types.APPROVE_REQUEST_SUCCESS, message });
-      const viewedUsername = localStorage.getItem('lastViewedUsername');
-      dispatch({
-        type: types.GET_SINGLE_REQUEST_SUCCESS,
-        payload: {
-          id: response.data.id,
-          title: response.data.title,
-          username: viewedUsername,
-          values: 'declined',
-          description: response.data.description,
-          priority: response.data.priority,
-          status: 3,
-        },
-      });
-      return response.status;
-    }
-  } catch (err) {
-    console.log(err);
+    const errorMessage = 'NETWORK/SERVER ERROR!';
+    dispatch({ type: types.VALIDATION_ERROR, errorMessage });
   }
 
   return null;
 };
 
 export {
-  userRequests, createRequestAction, fetchASingleRequest, updateRequestAction, approveRequestAction,
-  declineRequestAction,
+  userRequests, createRequestAction, fetchASingleRequest, updateRequestAction, requestAction,
 };
