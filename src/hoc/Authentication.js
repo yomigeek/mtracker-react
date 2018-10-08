@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
+import Navbar from '../components/Navbar';
 
 const checkAuthentication = (WrappedComponent) => {
   class Authentication extends Component {
@@ -26,7 +27,17 @@ const checkAuthentication = (WrappedComponent) => {
     }
 
     render() {
-      return <WrappedComponent {...this.props} />;
+      const userRole = localStorage.getItem('role');
+
+      return (
+        <React.Fragment>
+          <Navbar
+            {...this.props}
+            role={userRole}
+          />
+          <WrappedComponent {...this.props} />
+        </React.Fragment>
+      );
     }
   }
 

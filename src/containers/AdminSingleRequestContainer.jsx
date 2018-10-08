@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Footer from '../components/Footer';
-import { fetchASingleRequest, approveRequestAction } from '../actions/requestAction';
-import Navbar from '../components/Navbar';
+import { fetchASingleRequest, approveRequestAction, declineRequestAction } from '../actions/requestAction';
 import PageError from '../components/PageError';
 import loader from '../assets/images/loader.gif';
 import AdminSingleRequest from '../components/AdminSingleRequest';
@@ -36,6 +35,9 @@ class AdminSingleRequestContainer extends React.Component {
    */
   declineRequestHandler = (event) => {
     event.preventDefault();
+    const { match, declineRequest } = this.props;
+    const { requestId } = match.params;
+    declineRequest(requestId);
   }
 
   /**
@@ -48,13 +50,12 @@ class AdminSingleRequestContainer extends React.Component {
 
   render() {
     const {
-      loading, requestMessage, singleRequest, history, error,
+      loading, requestMessage, singleRequest, error,
     } = this.props;
     const errorMessage = 'This Request does not exist!';
 
     return (
       <React.Fragment>
-        <Navbar history={history} />
         {
           singleRequest.title ? (
             <AdminSingleRequest
@@ -95,6 +96,7 @@ AdminSingleRequestContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   fetchSingleRequest: PropTypes.func.isRequired,
   approveRequest: PropTypes.func,
+  declineRequest: PropTypes.func,
   requestMessage: PropTypes.string,
   singleRequest: PropTypes.instanceOf(Object),
   match: PropTypes.instanceOf(Object).isRequired,
@@ -107,6 +109,8 @@ AdminSingleRequestContainer.defaultProps = {
   singleRequest: {},
   error: '',
   approveRequest: () => {
+  },
+  declineRequest: () => {
   },
 };
 
@@ -121,6 +125,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchSingleRequest: requestId => dispatch(fetchASingleRequest(requestId)),
   approveRequest: requestId => dispatch(approveRequestAction(requestId)),
+  declineRequest: requestId => dispatch(declineRequestAction(requestId)),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminSingleRequestContainer);

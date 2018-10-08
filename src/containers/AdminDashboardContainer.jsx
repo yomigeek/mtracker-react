@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Footer from '../components/Footer';
 import AdminDashboard from '../components/AdminDashboard';
 import { userRequests } from '../actions/requestAction';
-import Navbar from '../components/Navbar';
 
 class AdminDashboardContainer extends React.Component {
  state = {
@@ -30,7 +29,6 @@ class AdminDashboardContainer extends React.Component {
    const { requestLoading, allUserRequests, history } = this.props;
    return (
      <React.Fragment>
-       <Navbar history={history} />
        <AdminDashboard
          loading={requestLoading}
          failedRequestMessage={failedRequestMessage}

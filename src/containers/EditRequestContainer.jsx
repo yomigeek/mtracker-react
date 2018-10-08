@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Footer from '../components/Footer';
 import { fetchASingleRequest, updateRequestAction } from '../actions/requestAction';
-import Navbar from '../components/Navbar';
 import EditRequest from '../components/EditRequest';
 import PageError from '../components/PageError';
 import loader from '../assets/images/loader.gif';
@@ -63,14 +62,13 @@ class EditRequestContainer extends React.Component {
 
   render() {
     const {
-      error, loading, requestMessage, singleRequest, history,
+      error, loading, requestMessage, singleRequest,
     } = this.props;
     const { request } = this.state;
     const errorMessage = 'This Request does not exist!';
 
     return (
       <React.Fragment>
-        <Navbar history={history} />
         {
           singleRequest.title ? (
             <EditRequest

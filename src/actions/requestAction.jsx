@@ -179,6 +179,51 @@ const approveRequestAction = requestId => async (dispatch) => {
           values: 'approved',
           description: response.data.description,
           priority: response.data.priority,
+          status: 2,
+        },
+      });
+      return response.status;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+
+  return null;
+};
+
+const declineRequestAction = requestId => async (dispatch) => {
+  let error = '';
+  let message = '';
+  dispatch(dashboardLoader);
+  dispatch({ type: types.VALIDATION_ERROR, error });
+  dispatch({ type: types.APPROVE_REQUEST_SUCCESS, message });
+  try {
+    const response = await fetchData({
+      apiUrl: `/requests/${requestId}/disapprove`,
+      method: 'PUT',
+      headerType: 'token-type',
+    });
+    dispatch(complete);
+    if (response.status === 'fail') {
+      error = response.message;
+      dispatch({ type: types.VALIDATION_ERROR, error });
+      return response;
+    }
+    if (response.status === 'success') {
+      message = 'This Request has been Declined Succesfully!';
+      dispatch({ type: types.VALIDATION_ERROR, error });
+      dispatch({ type: types.APPROVE_REQUEST_SUCCESS, message });
+      const viewedUsername = localStorage.getItem('lastViewedUsername');
+      dispatch({
+        type: types.GET_SINGLE_REQUEST_SUCCESS,
+        payload: {
+          id: response.data.id,
+          title: response.data.title,
+          username: viewedUsername,
+          values: 'declined',
+          description: response.data.description,
+          priority: response.data.priority,
+          status: 3,
         },
       });
       return response.status;
@@ -192,4 +237,5 @@ const approveRequestAction = requestId => async (dispatch) => {
 
 export {
   userRequests, createRequestAction, fetchASingleRequest, updateRequestAction, approveRequestAction,
+  declineRequestAction,
 };

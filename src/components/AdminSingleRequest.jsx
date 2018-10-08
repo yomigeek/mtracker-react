@@ -7,7 +7,7 @@ import '../assets/css/pages.css';
 
 const AdminSingleRequest = (props) => {
   const {
-    requestDetail, loading, approveRequest, message, error,
+    requestDetail, loading, approveRequest, message, error, declineRequest,
   } = props;
   return (
     <React.Fragment>
@@ -36,7 +36,10 @@ const AdminSingleRequest = (props) => {
       {error ? (
         <p className="error">
           {error}
-        . Either due to network or it has already been approved.
+        . Either due to network or it has already been
+          {' '}
+          {error.substr(-9, 8)}
+        .
         </p>
       ) : ''}
       <div className="details-container details-panel-header" id="request-details-box">
@@ -95,11 +98,11 @@ const AdminSingleRequest = (props) => {
             {requestDetail.priority}
           </font>
         </p>
-        {requestDetail.status === 1 || requestDetail.status === 2
+        {requestDetail.status === 2 || requestDetail.status === 3
           ? (
             <React.Fragment>
               <button className="approve-button" type="button" onClick={approveRequest}>Approve Request</button>
-              <button className="decline-button" type="button">Decline Request</button>
+              <button className="decline-button" type="button" onClick={declineRequest}>Decline Request</button>
             </React.Fragment>
           )
 
@@ -109,10 +112,6 @@ const AdminSingleRequest = (props) => {
             </React.Fragment>
           )
           }
-        <p className="category-panel-header">
-          <font id="resolve-message" />
-        </p>
-
       </div>
 
 
@@ -123,7 +122,8 @@ const AdminSingleRequest = (props) => {
 AdminSingleRequest.propTypes = {
   requestDetail: PropTypes.instanceOf(Object).isRequired,
   loading: PropTypes.bool,
-  approveRequest: PropTypes.func.isRequired,
+  approveRequest: PropTypes.func,
+  declineRequest: PropTypes.func,
   message: PropTypes.string,
   error: PropTypes.string,
 };
@@ -132,6 +132,10 @@ AdminSingleRequest.defaultProps = {
   loading: false,
   message: '',
   error: '',
+  approveRequest: () => {
+  },
+  declineRequest: () => {
+  },
 };
 
 export default AdminSingleRequest;
