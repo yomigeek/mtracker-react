@@ -34,6 +34,8 @@ const loginUser = (userDetails, history) => async (dispatch) => {
       localStorage.setItem('role', response.data.role);
 
       if (response.data.role === 'user') history.push('/dashboard');
+      if (response.data.role === 'admin') history.push('/admin-dashboard');
+
       // return response;
     }
   } catch (err) {
