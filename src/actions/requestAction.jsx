@@ -7,6 +7,7 @@ const dashboardLoader = {
 const complete = {
   type: types.IS_COMPLETE,
 };
+const userRole = localStorage.getItem('role');
 
 const userRequests = role => async (dispatch) => {
   const error = '';
@@ -14,13 +15,11 @@ const userRequests = role => async (dispatch) => {
   dispatch({ type: types.VALIDATION_ERROR, error });
   try {
     let response;
-    console.log(typeof role);
     if (role === 'admin') {
       response = await fetchData({
         apiUrl: '/requests',
         headerType: 'token-type',
       });
-      console.log(response);
     }
     if (role === 'user') {
       response = await fetchData({
@@ -80,10 +79,19 @@ const fetchASingleRequest = requestId => async (dispatch) => {
   dispatch({ type: types.VALIDATION_ERROR, error });
   dispatch(dashboardLoader);
   try {
-    const response = await fetchData({
-      apiUrl: `/users/requests/${requestId}`,
-      headerType: 'token-type',
-    });
+    let response;
+    if (userRole === 'admin') {
+      response = await fetchData({
+        apiUrl: `/requests/${requestId}`,
+        headerType: 'token-type',
+      });
+    }
+    if (userRole === 'user') {
+      response = await fetchData({
+        apiUrl: `/users/requests/${requestId}`,
+        headerType: 'token-type',
+      });
+    }
     dispatch(complete);
     if (response.status === 'fail') {
       return response.status;
@@ -94,14 +102,6 @@ const fetchASingleRequest = requestId => async (dispatch) => {
     });
 
     return response.data.requests;
-    // if (response.status === 'fail') {
-    //   return response.status;
-    // }
-    // dispatch({
-    //   type: types.GET_SINGLE_REQUEST_SUCCESS,
-    //   payload: response.data.requests,
-    // });
-    // return response.data.requests;
   } catch (err) {
     console.log(err);
   }
