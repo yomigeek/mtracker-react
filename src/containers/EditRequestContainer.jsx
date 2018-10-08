@@ -133,7 +133,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchSingleRequest: requestId => dispatch(fetchASingleRequest(requestId)),
-  updateSingleRequest: (requestId, requestDetails) => dispatch(updateRequestAction(requestId, requestDetails)),
+  updateSingleRequest:
+  (requestId, requestDetails) => dispatch(updateRequestAction(requestId, requestDetails)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditRequestContainer);

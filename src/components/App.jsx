@@ -9,6 +9,7 @@ import checkAuthentication from '../hoc/Authentication';
 import CreateRequestContainer from '../containers/CreateRequestContainer';
 import EditRequestContainer from '../containers/EditRequestContainer';
 import AdminDashboardContainer from '../containers/AdminDashboardContainer';
+import AdminSingleRequestContainer from '../containers/AdminSingleRequestContainer';
 
 const App = () => (
   <div>
@@ -20,10 +21,10 @@ const App = () => (
       <Route exact path="/create-a-request" component={checkAuthentication(CreateRequestContainer)} />
       <Route exact path="/edit-request/:requestId" component={checkAuthentication(EditRequestContainer)} />
       <Route exact path="/admin-dashboard" component={checkAuthentication(AdminDashboardContainer)} />
+      <Route exact path="/view-request/:requestId" component={checkAuthentication(AdminSingleRequestContainer)} />
       <Route to="*" component={Page404} />
     </Switch>
   </div>
-
 );
 
 export default App;
