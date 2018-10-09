@@ -8,6 +8,8 @@ script:
   - npm test -- --coverage # Include coverage when running tests
 after_script: # Upload coverage reports 
   - COVERALLS_REPO_TOKEN=MRLYs5JzdECQqQFJQOqISkaqTC71XtuW5
+after_success:
+  - npm run coveralls
 # deploy:
 #   provider: pages
 #   skip_cleanup: true
