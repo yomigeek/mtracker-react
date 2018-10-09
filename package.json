@@ -11,10 +11,9 @@
     "test": "jest --config jest-config.js --coverage",
     "start": "webpack --mode production && babel-node app.js --exec",
     "dev": "webpack-dev-server --mode development --hot --open",
-    "build": "webpack --mode production && node app.js ",
+    "build": "webpack --mode production && babel-node app.js ",
     "coverage": "jest --config jest-config.js --coverage",
-    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
-    "postinstall": "webpack --mode production"
+    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
   },
   "jest": {
     "moduleNameMapper": {
