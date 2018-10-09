@@ -8,11 +8,18 @@
   },
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --config jest-config.js --coverage",
     "start": "webpack --mode production && babel-node app.js --exec",
     "dev": "webpack-dev-server --mode development --hot --open",
     "build": "webpack --mode production && node app.js ",
+    "coverage": "jest --config jest-config.js --coverage",
+    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "postinstall": "webpack --mode production"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
+    }
   },
   "repository": {
     "type": "git",
@@ -25,10 +32,12 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^9.0.0",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "coveralls": "^3.0.2",
     "css-loader": "^1.0.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
@@ -41,12 +50,15 @@
     "jwt-decode": "^2.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
+    "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
+    "react-test-renderer": "^16.5.2",
     "redux": "^4.0.0",
     "redux-immutable-state-invariant": "^2.1.0",
     "redux-logger": "^3.0.6",
+    "redux-mock-store": "^1.5.3",
     "redux-thunk": "^2.3.0",
     "sinon": "^6.3.5",
     "style-loader": "^0.22.0",
@@ -63,6 +75,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
+    "identity-obj-proxy": "^3.0.0",
     "image-webpack-loader": "^4.3.1",
     "webpack-cli": "^3.1.0"
   },
