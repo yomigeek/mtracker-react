@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import SignUp from '../components/SignUp';
 import signUpUser from '../actions/signUpAction';
 
-class SignUpContainer extends React.Component {
+export class SignUpContainer extends React.Component {
  state = {
    username: '',
    email: '',
@@ -69,7 +69,7 @@ const mapStateToProps = state => ({
   loading: state.loader.loading,
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   signup: userDetails => dispatch(signUpUser(userDetails)),
 });
 

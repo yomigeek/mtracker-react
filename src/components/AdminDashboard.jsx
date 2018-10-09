@@ -62,7 +62,7 @@ const AdminDashboard = (props) => {
                     <td data-column="Title">{userRequest.title}</td>
                     <td data-column="Description">{userRequest.description}</td>
                     <td data-column="Priority">{userRequest.priority}</td>
-                    <td data-column="Priority">{userRequest.values}</td>
+                    <td data-column="Status">{userRequest.values}</td>
                     <td data-column="Action" id="action-row">
                       <Link to={`/view-request/${userRequest.id}`}>
                         <button className="view-button" type="button">

@@ -10,7 +10,7 @@ import Footer from '../components/Footer';
 Enzyme.configure({ adapter: new Adapter() });
 
 // Landing Page Test
-describe('>>>LANDING PAGE COMPONENTS', () => {
+describe('>>>LANDING PAGE COMPONENT', () => {
   let component;
   let footerComponent;
   let node;
@@ -36,7 +36,7 @@ describe('>>>LANDING PAGE COMPONENTS', () => {
     expect(footerComponent.length).toEqual(1);
   });
 
-  it('has an div tag', () => {
+  it('has an h3 tag', () => {
     expect(node).toBeTruthy();
   });
 
