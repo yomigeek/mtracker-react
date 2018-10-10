@@ -1,7 +1,7 @@
 import React from 'react';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { SignUpContainer, mapDispatchToProps } from '../../containers/SignUpContainer';
+import { CreateRequestContainer, mapDispatchToProps } from '../../containers/CreateRequestContainer';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -9,9 +9,6 @@ describe('Signup Container Component', () => {
   let wrapper;
   const event = {
     preventDefault: jest.fn(),
-    target: {
-      username: 'yomi',
-    },
   };
   const mockFunction = jest.fn();
   const props = {
@@ -24,31 +21,24 @@ describe('Signup Container Component', () => {
       push: mockFunction,
     },
   };
-  const mockUserDetails = {
-    email: 'yoyo@ggmail.com',
-    password: '123456',
-    username: 'yomyom',
-    department: 'IT',
+  const mockRequestDetails = {
+    title: 'Repair laptop',
+    description: 'Laptop repair now now',
+    priority: 'low',
   };
   it('Renders signup form', () => {
-    wrapper = shallow(<SignUpContainer {...props} />);
+    wrapper = shallow(<CreateRequestContainer {...props} />);
     expect(wrapper.exists()).toBe(true);
   });
-  it('calls the submit form handler', () => {
-    wrapper = shallow(<SignUpContainer {...props} />);
+  it('calls the create form handler', () => {
+    wrapper = shallow(<CreateRequestContainer {...props} />);
     const instance = wrapper.instance();
-    instance.signUpFormHandler(event);
+    instance.createRequestFormHandler(event);
     expect(mockFunction).toHaveBeenCalledTimes(0);
   });
-  it('calls the input change event handler', () => {
-    wrapper = shallow(<SignUpContainer {...props} />);
-    const instance = wrapper.instance();
-    instance.inputChangedHandler(event);
-    expect(mockFunction).toHaveBeenCalledTimes(0);
-  });
-  it('it dispatches the action"', () => {
+  it('dispatches the create request action"', () => {
     const newPropsDispatch = mapDispatchToProps(mockFunction);
-    newPropsDispatch.signup(mockUserDetails);
+    newPropsDispatch.createARequest(mockRequestDetails);
     expect(mockFunction).toHaveBeenCalledTimes(1);
   });
 });

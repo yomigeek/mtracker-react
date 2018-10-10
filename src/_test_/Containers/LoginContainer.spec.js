@@ -6,6 +6,7 @@ import { LoginContainer, mapDispatchToProps } from '../../containers/LoginContai
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('Login Container component', () => {
+  // create any initial state needed
   let wrapper;
   const event = {
     preventDefault: jest.fn(),
@@ -17,6 +18,9 @@ describe('Login Container component', () => {
     error: '',
     loading: false,
     login: mockFunction,
+    history: {
+      push: mockFunction,
+    },
   };
   const mockUserDetails = {
     email: 'yomi@mmmm.com',
@@ -25,7 +29,12 @@ describe('Login Container component', () => {
   const mockHistory = {
     push: mockFunction,
   };
-
+  it('render login container component', () => {
+    wrapper = shallow(
+      <LoginContainer {...props} />,
+    );
+    expect(wrapper).toBeTruthy();
+  });
   it('Renders login form', () => {
     wrapper = shallow(<LoginContainer {...props} />);
     expect(wrapper.exists()).toBe(true);

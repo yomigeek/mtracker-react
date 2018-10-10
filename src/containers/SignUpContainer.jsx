@@ -27,12 +27,6 @@ export class SignUpContainer extends React.Component {
     const updatedSignUpData = Object.assign({}, this.state);
     const response = await signup(updatedSignUpData);
     if (response === 'success') history.push('/login');
-    // actions.signUpUser(updatedSignUpData);
-    // this.setState({ password: '' });
-
-    // if (updatedSignUpData.department === '') {
-    //   console.log('Department cannot be empty!');
-    // } else {
   }
 
   render() {
@@ -55,6 +49,7 @@ export class SignUpContainer extends React.Component {
 SignUpContainer.propTypes = {
   error: PropTypes.string,
   loading: PropTypes.bool.isRequired,
+  history: PropTypes.shape({}).isRequired,
   signup: PropTypes.func.isRequired,
   // actions: PropTypes.func.isRequired,
 };

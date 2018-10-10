@@ -55,7 +55,7 @@ LoginContainer.defaultProps = {
 };
 
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   error: state.auth.error,
   loading: state.loader.loading,
 });

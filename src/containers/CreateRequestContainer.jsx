@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import { createRequestAction } from '../actions/requestAction';
 import CreateRequest from '../components/CreateRequest';
 
-class CreateRequestContainer extends React.Component {
+export class CreateRequestContainer extends React.Component {
  state = {
    title: '',
    description: '',
@@ -66,7 +66,7 @@ const mapStateToProps = state => ({
   requestMessage: state.request.message,
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   createARequest: requestData => dispatch(createRequestAction(requestData)),
 });
 

@@ -14,6 +14,7 @@ const requestReducer = (state = initialState, action) => {
         message,
       };
     case types.GET_REQUESTS_SUCCESS:
+    console.log(payload, 'REQ PAYLOAD>>>>>>>>');
       return {
         ...state,
         allRequests: payload,

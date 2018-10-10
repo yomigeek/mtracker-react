@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import UserDashboard from '../components/UserDashboard';
 import { userRequests } from '../actions/requestAction';
 
-class UserDashboardContainer extends React.Component {
+export class UserDashboardContainer extends React.Component {
  state = {
    username: '',
    failedRequestMessage: '',
@@ -63,7 +63,7 @@ const mapStateToProps = state => ({
   allUserRequests: state.request.allRequests,
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   getAllRequest: () => dispatch(userRequests('user')),
 });
 

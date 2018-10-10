@@ -8,7 +8,7 @@ import PageError from '../components/PageError';
 import loader from '../assets/images/loader.gif';
 
 
-class EditRequestContainer extends React.Component {
+export class EditRequestContainer extends React.Component {
   state = {
     request: {
       title: '',
@@ -129,7 +129,7 @@ const mapStateToProps = state => ({
   singleRequest: state.request.singleRequest,
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   fetchSingleRequest: requestId => dispatch(fetchASingleRequest(requestId)),
   updateSingleRequest:
   (requestId, requestDetails) => dispatch(updateRequestAction(requestId, requestDetails)),

@@ -7,7 +7,6 @@ const dashboardLoader = {
 const complete = {
   type: types.IS_COMPLETE,
 };
-const userRole = localStorage.getItem('role');
 
 const userRequests = role => async (dispatch) => {
   const error = '';
@@ -76,7 +75,7 @@ const createRequestAction = requestDetails => async (dispatch) => {
   return null;
 };
 
-const fetchASingleRequest = requestId => async (dispatch) => {
+const fetchASingleRequest = (requestId, userRole) => async (dispatch) => {
   const error = '';
   const message = '';
   dispatch({ type: types.VALIDATION_ERROR, error });
@@ -97,6 +96,7 @@ const fetchASingleRequest = requestId => async (dispatch) => {
       });
     }
     dispatch(complete);
+    console.log(userRole, 'aaaaa');
     if (response.status === 'fail') {
       return response.status;
     }
@@ -130,7 +130,9 @@ const updateRequestAction = (requestId, requestDetails) => async (dispatch) => {
       headerType: 'token-type',
     });
     dispatch(complete);
-    if (response.status === 'fail') {
+    console.log(response, 'we got here o');
+    if (response.status === 'faild') {
+      console.log('we got here');
       error = response.message;
       dispatch({ type: types.VALIDATION_ERROR, error });
       return response;

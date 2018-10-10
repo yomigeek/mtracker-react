@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import AdminDashboard from '../components/AdminDashboard';
 import { userRequests } from '../actions/requestAction';
 
-class AdminDashboardContainer extends React.Component {
+export class AdminDashboardContainer extends React.Component {
  state = {
    failedRequestMessage: '',
  }
@@ -57,7 +57,7 @@ const mapStateToProps = state => ({
   allUserRequests: state.request.allRequests,
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   getAllRequest: () => dispatch(userRequests('admin')),
 });
 
