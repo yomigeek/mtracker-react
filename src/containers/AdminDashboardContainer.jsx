@@ -10,6 +10,10 @@ export class AdminDashboardContainer extends React.Component {
    failedRequestMessage: '',
  }
 
+ /**
+   * @description Fetches all the requests
+   * @returns {null}
+   */
  componentDidMount = async () => {
    const { getAllRequest } = this.props;
    const response = await getAllRequest();
@@ -18,6 +22,10 @@ export class AdminDashboardContainer extends React.Component {
    }
  }
 
+ /**
+   * @description Handles the fail to get a request message state
+   * @param {Object} failedRequestMessage The returned request object
+   */
  setFail = () => {
    this.setState({
      failedRequestMessage: 'No request exist yet',

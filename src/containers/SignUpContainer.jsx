@@ -21,6 +21,10 @@ export class SignUpContainer extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   }
 
+  /**
+   * @description Handles the user signup process
+   * @returns {null}
+   */
   signUpFormHandler = async (event) => {
     event.preventDefault();
     const { signup, history } = this.props;

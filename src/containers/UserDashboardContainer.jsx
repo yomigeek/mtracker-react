@@ -11,18 +11,26 @@ export class UserDashboardContainer extends React.Component {
    failedRequestMessage: '',
  }
 
- componentDidMount = async () => {
-   const newUsername = localStorage.getItem('username');
-   this.setState({
-     username: newUsername,
-   });
-   const { getAllRequest } = this.props;
-   const response = await getAllRequest();
-   if (response === 'fail') {
-     this.setFail();
-   }
- }
+ /**
+ * @description Fetches all user request information
+ * @returns {null}
+ */
+componentDidMount = async () => {
+  const newUsername = localStorage.getItem('username');
+  this.setState({
+    username: newUsername,
+  });
+  const { getAllRequest } = this.props;
+  const response = await getAllRequest();
+  if (response === 'fail') {
+    this.setFail();
+  }
+}
 
+ /**
+   * @description Handles the fail to get a request message state
+   * @param {Object} failedRequestMessage The returned request object
+   */
  setFail = () => {
    this.setState({
      failedRequestMessage: 'User does not have a request yet!',

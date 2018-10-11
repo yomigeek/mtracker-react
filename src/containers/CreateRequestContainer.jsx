@@ -20,12 +20,15 @@ export class CreateRequestContainer extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   }
 
+  /**
+   * @description Handles the creating of request
+   * @returns {null}
+   */
   createRequestFormHandler = async (event) => {
     event.preventDefault();
     const { createARequest } = this.props;
     const requestData = Object.assign({}, this.state);
     createARequest(requestData);
-    // if (response === 'success') history.push('');
   }
 
   render() {

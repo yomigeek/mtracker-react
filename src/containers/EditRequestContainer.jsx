@@ -21,11 +21,11 @@ export class EditRequestContainer extends React.Component {
    * @description Fetches the request with the given Id from the API
    * @returns {null}
    */
-  componentDidMount = () => {
-    const { match, fetchSingleRequest } = this.props;
+  componentWillMount = () => {
+    const { match, fetchSingleRequest, userRole } = this.props;
     const { request } = this.state;
     const { requestId } = match.params;
-    fetchSingleRequest(requestId)
+    fetchSingleRequest(requestId, userRole)
       .then(newresponse => this.setRequestState(request, newresponse));
   }
 
@@ -66,7 +66,6 @@ export class EditRequestContainer extends React.Component {
     } = this.props;
     const { request } = this.state;
     const errorMessage = 'This Request does not exist!';
-
     return (
       <React.Fragment>
         {
@@ -113,6 +112,7 @@ EditRequestContainer.propTypes = {
   singleRequest: PropTypes.instanceOf(Object),
   match: PropTypes.instanceOf(Object).isRequired,
   history: PropTypes.shape({}).isRequired,
+  userRole: PropTypes.string.isRequired,
 };
 
 EditRequestContainer.defaultProps = {
@@ -127,12 +127,13 @@ const mapStateToProps = state => ({
   loading: state.loader.dashboardLoading,
   requestMessage: state.request.message,
   singleRequest: state.request.singleRequest,
+  userRole: state.user.role,
 });
 
 export const mapDispatchToProps = dispatch => ({
-  fetchSingleRequest: requestId => dispatch(fetchASingleRequest(requestId)),
+  fetchSingleRequest: (requestId, userRole) => dispatch(fetchASingleRequest(requestId, userRole)),
   updateSingleRequest:
-  (requestId, requestDetails) => dispatch(updateRequestAction(requestId, requestDetails)),
+    (requestId, requestDetails) => dispatch(updateRequestAction(requestId, requestDetails)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditRequestContainer);
