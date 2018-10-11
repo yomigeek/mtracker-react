@@ -50,7 +50,7 @@ describe('login actions', () => {
     const expectedActions = { type: types.USER_LOGIN_SUCCESS, payload: mockStorePayload };
     await store.dispatch(loginUser(user, mockHistory));
     const dispatchedActions = store.getActions();
-    expect(dispatchedActions[4]).toEqual(expectedActions);
+    expect(dispatchedActions[5]).toEqual(expectedActions);
   });
   it('should fail to login a user on wrong details', async () => {
     const user = {
@@ -62,6 +62,6 @@ describe('login actions', () => {
     const expectedActions = { type: types.VALIDATION_ERROR, error: 'Wrong password!' };
     await store.dispatch(loginUser(user, mockHistory));
     const dispatchedActions = store.getActions();
-    expect(dispatchedActions[3]).toEqual(expectedActions);
+    expect(dispatchedActions[4]).toEqual(expectedActions);
   });
 });

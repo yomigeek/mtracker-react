@@ -31,7 +31,7 @@ export class LoginContainer extends React.Component {
   }
 
   render() {
-    const { error, loading } = this.props;
+    const { error, loading, authMessage } = this.props;
     return (
       <React.Fragment>
         <Login
@@ -39,6 +39,7 @@ export class LoginContainer extends React.Component {
           submitUrl={this.loginFormHandler}
           error={error}
           loading={loading}
+          authMessage={authMessage}
         />
         <Footer />
       </React.Fragment>
@@ -52,16 +53,19 @@ LoginContainer.propTypes = {
   history: PropTypes.shape({}).isRequired,
   loading: PropTypes.bool.isRequired,
   login: PropTypes.func.isRequired,
+  authMessage: PropTypes.string,
 };
 
 LoginContainer.defaultProps = {
   error: '',
+  authMessage: '',
 };
 
 
 export const mapStateToProps = state => ({
   error: state.auth.error,
   loading: state.loader.loading,
+  authMessage: state.auth.authMessage,
 });
 
 export const mapDispatchToProps = dispatch => ({

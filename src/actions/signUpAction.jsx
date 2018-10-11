@@ -28,6 +28,7 @@ const signUpUser = userDetails => async (dispatch) => {
       const message = 'Account Created Successfully! You can now login below';
       dispatch({ type: types.VALIDATION_ERROR, error });
       dispatch({ type: types.USER_SIGN_UP_SUCCESS, message });
+      dispatch({ type: types.USER_SIGN_UP_MESSAGE_SUCCESS, message });
       return response.status;
     }
   } catch (err) {

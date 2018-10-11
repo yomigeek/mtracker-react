@@ -10,8 +10,11 @@ const complete = {
 
 const loginUser = (userDetails, history) => async (dispatch) => {
   let error = '';
+  const authMessage = '';
   dispatch(loader);
   dispatch({ type: types.VALIDATION_ERROR, error });
+  dispatch({ type: types.USER_SIGN_UP_MESSAGE_SUCCESS, authMessage });
+
   try {
     const response = await fetchData({
       apiUrl: '/auth/login',

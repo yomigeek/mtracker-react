@@ -7,7 +7,7 @@ import Aux from '../hoc/Aux';
 
 const Login = (props) => {
   const {
-    error, handleInputChange, submitUrl, loading,
+    error, handleInputChange, submitUrl, loading, authMessage,
   } = props;
   return (
     <Aux>
@@ -16,6 +16,13 @@ const Login = (props) => {
       </p>
       <p className="app-name">M-Tracker</p>
       {error ? (<p className="error-account">{error}</p>) : ''}
+      {authMessage
+        ? (
+          <p className="working-msg" id="signup-process">
+            {authMessage}
+          </p>
+        ) : ''
+      }
       {loading
         ? (
           <p className="working-msg" id="signup-process">
@@ -76,11 +83,13 @@ Login.propTypes = {
   loading: PropTypes.bool.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   submitUrl: PropTypes.func,
+  authMessage: PropTypes.string,
 };
 
 Login.defaultProps = {
   submitUrl: '',
   error: '',
+  authMessage: '',
 };
 
 export default Login;
