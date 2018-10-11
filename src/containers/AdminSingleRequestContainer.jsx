@@ -7,15 +7,15 @@ import PageError from '../components/PageError';
 import loader from '../assets/images/loader.gif';
 import AdminSingleRequest from '../components/AdminSingleRequest';
 
-class AdminSingleRequestContainer extends React.Component {
+export class AdminSingleRequestContainer extends React.Component {
   /**
    * @description Fetches the request information with the given Id from the API
    * @returns {null}
    */
   componentWillMount = async () => {
-    const { match, fetchSingleRequest } = this.props;
+    const { match, fetchSingleRequest, userRole } = this.props;
     const { requestId } = match.params;
-    await fetchSingleRequest(requestId);
+    await fetchSingleRequest(requestId, userRole);
   }
 
   /**
@@ -126,10 +126,11 @@ const mapStateToProps = state => ({
   loading: state.loader.dashboardLoading,
   requestMessage: state.request.message,
   singleRequest: state.request.singleRequest,
+  userRole: state.user.role,
 });
 
-const mapDispatchToProps = dispatch => ({
-  fetchSingleRequest: requestId => dispatch(fetchASingleRequest(requestId)),
+export const mapDispatchToProps = dispatch => ({
+  fetchSingleRequest: (requestId, userRole) => dispatch(fetchASingleRequest(requestId, userRole)),
   approveRequest: (requestId, action) => dispatch(requestAction(requestId, action)),
   declineRequest: (requestId, action) => dispatch(requestAction(requestId, action)),
   resolveRequest: (requestId, action) => dispatch(requestAction(requestId, action)),

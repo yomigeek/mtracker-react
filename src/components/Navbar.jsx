@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import logout from '../actions/logoutAction';
 
-class Navbar extends React.Component {
+export class Navbar extends React.Component {
   state = {}
 
-  logUserOut = (event) => {
-    event.preventDefault();
+  logUserOut = () => {
     const { logoutUser, history } = this.props;
     logoutUser();
     history.push('/login');
@@ -38,7 +37,7 @@ Navbar.propTypes = {
   role: PropTypes.string.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   logoutUser: () => dispatch(logout()),
 });
 

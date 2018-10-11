@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import { createRequestAction } from '../actions/requestAction';
 import CreateRequest from '../components/CreateRequest';
 
-class CreateRequestContainer extends React.Component {
+export class CreateRequestContainer extends React.Component {
  state = {
    title: '',
    description: '',
@@ -20,12 +20,15 @@ class CreateRequestContainer extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   }
 
+  /**
+   * @description Handles the creating of request
+   * @returns {null}
+   */
   createRequestFormHandler = async (event) => {
     event.preventDefault();
     const { createARequest } = this.props;
     const requestData = Object.assign({}, this.state);
     createARequest(requestData);
-    // if (response === 'success') history.push('');
   }
 
   render() {
@@ -66,7 +69,7 @@ const mapStateToProps = state => ({
   requestMessage: state.request.message,
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   createARequest: requestData => dispatch(createRequestAction(requestData)),
 });
 

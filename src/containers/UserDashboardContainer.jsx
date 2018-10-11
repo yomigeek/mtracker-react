@@ -5,24 +5,32 @@ import Footer from '../components/Footer';
 import UserDashboard from '../components/UserDashboard';
 import { userRequests } from '../actions/requestAction';
 
-class UserDashboardContainer extends React.Component {
+export class UserDashboardContainer extends React.Component {
  state = {
    username: '',
    failedRequestMessage: '',
  }
 
- componentDidMount = async () => {
-   const newUsername = localStorage.getItem('username');
-   this.setState({
-     username: newUsername,
-   });
-   const { getAllRequest } = this.props;
-   const response = await getAllRequest();
-   if (response === 'fail') {
-     this.setFail();
-   }
- }
+ /**
+ * @description Fetches all user request information
+ * @returns {null}
+ */
+componentDidMount = async () => {
+  const newUsername = localStorage.getItem('username');
+  this.setState({
+    username: newUsername,
+  });
+  const { getAllRequest } = this.props;
+  const response = await getAllRequest();
+  if (response === 'fail') {
+    this.setFail();
+  }
+}
 
+ /**
+   * @description Handles the fail to get a request message state
+   * @param {Object} failedRequestMessage The returned request object
+   */
  setFail = () => {
    this.setState({
      failedRequestMessage: 'User does not have a request yet!',
@@ -63,7 +71,7 @@ const mapStateToProps = state => ({
   allUserRequests: state.request.allRequests,
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   getAllRequest: () => dispatch(userRequests('user')),
 });
 

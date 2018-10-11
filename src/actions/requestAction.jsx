@@ -7,7 +7,6 @@ const dashboardLoader = {
 const complete = {
   type: types.IS_COMPLETE,
 };
-const userRole = localStorage.getItem('role');
 
 const userRequests = role => async (dispatch) => {
   const error = '';
@@ -75,8 +74,7 @@ const createRequestAction = requestDetails => async (dispatch) => {
 
   return null;
 };
-
-const fetchASingleRequest = requestId => async (dispatch) => {
+const fetchASingleRequest = (requestId, userRole) => async (dispatch) => {
   const error = '';
   const message = '';
   dispatch({ type: types.VALIDATION_ERROR, error });
@@ -84,13 +82,15 @@ const fetchASingleRequest = requestId => async (dispatch) => {
   dispatch({ type: types.APPROVE_REQUEST_SUCCESS, message });
   try {
     let response;
-    if (userRole === 'admin') {
+    const role = userRole || localStorage.getItem('role');
+
+    if (role === 'admin') {
       response = await fetchData({
         apiUrl: `/requests/${requestId}`,
         headerType: 'token-type',
       });
     }
-    if (userRole === 'user') {
+    if (role === 'user') {
       response = await fetchData({
         apiUrl: `/users/requests/${requestId}`,
         headerType: 'token-type',
@@ -106,7 +106,7 @@ const fetchASingleRequest = requestId => async (dispatch) => {
         payload: response.data.requests,
       });
       localStorage.setItem('lastViewedUsername', response.data.requests.username);
-      return response.status;
+      return response.data.requests;
     }
     return response.data.requests;
   } catch (err) {
@@ -130,7 +130,7 @@ const updateRequestAction = (requestId, requestDetails) => async (dispatch) => {
       headerType: 'token-type',
     });
     dispatch(complete);
-    if (response.status === 'fail') {
+    if (response.status === 'faild') {
       error = response.message;
       dispatch({ type: types.VALIDATION_ERROR, error });
       return response;
@@ -188,7 +188,7 @@ const requestAction = (requestId, action) => async (dispatch) => {
       headerType: 'token-type',
     });
     dispatch(complete);
-    if (response.status === 'fail') {
+    if (response.status === 'faild') {
       error = response.message;
       dispatch({ type: types.VALIDATION_ERROR, error });
       return response;

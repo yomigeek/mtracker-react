@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import Login from '../components/Login';
 import loginUser from '../actions/loginAction';
 
-class LoginContainer extends React.Component {
+export class LoginContainer extends React.Component {
  state = {
    email: '',
    password: '',
@@ -19,18 +19,15 @@ class LoginContainer extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   }
 
+  /**
+   * @description Handles the login process
+   * @returns {null}
+   */
   loginFormHandler = (event) => {
     event.preventDefault();
     const { login, history } = this.props;
     const updatedLoginData = Object.assign({}, this.state);
     login(updatedLoginData, history);
-    // if (response === 'success') history.push('/login');
-    // actions.signUpUser(updatedSignUpData);
-    // this.setState({ password: '' });
-
-    // if (updatedSignUpData.department === '') {
-    //   console.log('Department cannot be empty!');
-    // } else {
   }
 
   render() {
@@ -62,12 +59,12 @@ LoginContainer.defaultProps = {
 };
 
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   error: state.auth.error,
   loading: state.loader.loading,
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   login: (userDetails, history) => dispatch(loginUser(userDetails, history)),
 });
 

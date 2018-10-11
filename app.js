@@ -3,7 +3,7 @@ import path from 'path';
 
 const app = express();
 
-app.use(express.static('dist'));
+app.use('/assets/images/logo.png', express.static('dist'));
 
 const port = process.env.PORT || '9000';
 
@@ -13,4 +13,4 @@ app.get('/*', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-app.listen(port, () => console.log(`Running on localhost:${port}`));
+app.listen(port, () => (`Running on localhost:${port}`));

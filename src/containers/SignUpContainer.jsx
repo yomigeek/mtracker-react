@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import SignUp from '../components/SignUp';
 import signUpUser from '../actions/signUpAction';
 
-class SignUpContainer extends React.Component {
+export class SignUpContainer extends React.Component {
  state = {
    username: '',
    email: '',
@@ -21,18 +21,16 @@ class SignUpContainer extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   }
 
+  /**
+   * @description Handles the user signup process
+   * @returns {null}
+   */
   signUpFormHandler = async (event) => {
     event.preventDefault();
     const { signup, history } = this.props;
     const updatedSignUpData = Object.assign({}, this.state);
     const response = await signup(updatedSignUpData);
     if (response === 'success') history.push('/login');
-    // actions.signUpUser(updatedSignUpData);
-    // this.setState({ password: '' });
-
-    // if (updatedSignUpData.department === '') {
-    //   console.log('Department cannot be empty!');
-    // } else {
   }
 
   render() {
@@ -55,6 +53,7 @@ class SignUpContainer extends React.Component {
 SignUpContainer.propTypes = {
   error: PropTypes.string,
   loading: PropTypes.bool.isRequired,
+  history: PropTypes.shape({}).isRequired,
   signup: PropTypes.func.isRequired,
   // actions: PropTypes.func.isRequired,
 };
@@ -69,7 +68,7 @@ const mapStateToProps = state => ({
   loading: state.loader.loading,
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   signup: userDetails => dispatch(signUpUser(userDetails)),
 });
 
