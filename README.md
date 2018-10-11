@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/yomigeek/mtracker-react.svg?branch=develop)](https://travis-ci.org/yomigeek/mtracker-react)
-[![Coverage Status](https://coveralls.io/repos/github/yomigeek/mtracker-react/badge.svg?branch=develop)](https://coveralls.io/github/yomigeek/mtracker-react?branch=develop)
-
+[![Coverage Status](https://coveralls.io/repos/github/yomigeek/mtracker-react/badge.png?branch=develop)](https://coveralls.io/github/yomigeek/mtracker-react?branch=develop)
 
 ## MTracker-React
 The MTracke-React App is a React powered Client-side application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
@@ -44,7 +43,7 @@ The MTracke-React App is a React powered Client-side application that provides u
 - Navigate into the newly created folder and install the dependencies using your command line: ```cd folder_name && npm install```
 - Start the app by using ```npm run start``` and for development use ```npm run dev```
 - Make a ```GET``` request to ```http://localhost:9000``` or go to your browser and use the url ```http://localhost:9000```
-- To run ```test``` use the command ```npm test```
+- To run ```tests``` use the command ```npm test```
 
 ### Author
 Made with <3 by Yomi Olaoye ;)
