@@ -1,4 +1,3 @@
-import toastr from 'toastr';
 import fetchData from '../utilities/fetchData';
 import * as types from '../constants/actionTypes';
 
@@ -26,13 +25,14 @@ const signUpUser = userDetails => async (dispatch) => {
       return response;
     }
     if (response.status === 'success') {
-      const message = ' Account Created Successfully! You can now login below';
+      const message = 'Account Created Successfully! You can now login below';
       dispatch({ type: types.VALIDATION_ERROR, error });
       dispatch({ type: types.USER_SIGN_UP_SUCCESS, message });
       return response.status;
     }
   } catch (err) {
-    toastr.error('Unable to connect to the Internet, please check your connection and try agian...');
+    const errorMessage = 'Internet/Server Connection ERROR!';
+    dispatch({ type: types.VALIDATION_ERROR, errorMessage });
   }
 
   return null;

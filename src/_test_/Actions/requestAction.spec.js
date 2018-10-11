@@ -3,7 +3,10 @@ import Enzyme from 'enzyme';
 import thunk from 'redux-thunk';
 import Adapter from 'enzyme-adapter-react-16';
 import fetch from 'fetch-mock';
-import { userRequests, createRequestAction, fetchASingleRequest, updateRequestAction } from '../../actions/requestAction';
+import {
+  userRequests, createRequestAction, fetchASingleRequest, updateRequestAction,
+  requestAction,
+} from '../../actions/requestAction';
 import * as types from '../../constants/actionTypes';
 import localStorage from '../localStorage';
 
@@ -51,6 +54,14 @@ const updateFailedRequestResponse = {
   status: 'faild',
   message: 'Request Update Failed!',
 };
+const approveSuccessRequestResponse = {
+  status: 'success',
+  message: 'This Request has been Approved Succesfully!',
+};
+const declineSuccessRequestResponse = {
+  status: 'success',
+  message: 'This Request has been Declined Succesfully!',
+};
 const request = {
   title: 'user new request',
   description: 'A new request created',
@@ -62,14 +73,6 @@ const badRequest = {
   priority: '',
 };
 const mockStorePayload = [
-  {
-    id: 1, title: 'My request 1', description: 'ssssss', priority: 'low', username: 'oyomi', values: 'approved',
-  },
-  {
-    id: 1, title: 'My request 1', description: 'ssssss', priority: 'low', username: 'oyomi', values: 'approved',
-  },
-];
-const mockSingleRequest = [
   {
     id: 1, title: 'My request 1', description: 'ssssss', priority: 'low', username: 'oyomi', values: 'approved',
   },
@@ -132,6 +135,15 @@ describe('login actions', () => {
     const dispatchedActions = store.getActions();
     expect(dispatchedActions[4]).toEqual(expectedActions);
   });
+  it('get a single user request for a user', async () => {
+    store = mockStore(mockStorePayload);
+    fetch.restore();
+    await fetch.getOnce(`https://mtrackapi.herokuapp.com/api/v1/users/requests/${1}`, mockDetailsResponse);
+    const expectedActions = { type: types.GET_SINGLE_REQUEST_SUCCESS, payload: mockStorePayload };
+    await store.dispatch(fetchASingleRequest(1, 'user'));
+    const dispatchedActions = store.getActions();
+    expect(dispatchedActions[4]).toEqual(expectedActions);
+  });
   it('update user request successfully', async () => {
     const message = 'Request Updated Succesfully!';
     store = mockStore(mockStorePayload);
@@ -150,7 +162,27 @@ describe('login actions', () => {
     const expectedActions = { type: types.VALIDATION_ERROR, error };
     await store.dispatch(updateRequestAction(1, badRequest));
     const dispatchedActions = store.getActions();
-    console.log(dispatchedActions, 'NEW ACTIONS IN STORES');
     expect(dispatchedActions[4]).toEqual(expectedActions);
+  });
+  it('should approve user request', async () => {
+    const message = 'This Request has been Approved Succesfully!';
+    store = mockStore(mockStorePayload);
+    fetch.restore();
+    await fetch.putOnce(`https://mtrackapi.herokuapp.com/api/v1/requests/${1}/approve`, approveSuccessRequestResponse);
+    const expectedActions = { type: types.APPROVE_REQUEST_SUCCESS, message };
+    await store.dispatch(requestAction(1, 'approve'));
+    const dispatchedActions = store.getActions();
+    expect(dispatchedActions[5]).toEqual(expectedActions);
+  });
+  it('should decline user request', async () => {
+    const message = 'This Request has been Declined Succesfully!';
+    store = mockStore(mockStorePayload);
+    fetch.restore();
+    await fetch.putOnce(`https://mtrackapi.herokuapp.com/api/v1/requests/${1}/disapprove`, declineSuccessRequestResponse);
+    const expectedActions = { type: types.APPROVE_REQUEST_SUCCESS, message };
+    await store.dispatch(requestAction(1, 'decline'));
+    const dispatchedActions = store.getActions();
+    expect(dispatchedActions[5]).toEqual(expectedActions);
+    expect(dispatchedActions[5]).toEqual(expectedActions);
   });
 });

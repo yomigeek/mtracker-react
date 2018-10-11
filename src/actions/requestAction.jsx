@@ -74,7 +74,6 @@ const createRequestAction = requestDetails => async (dispatch) => {
 
   return null;
 };
-
 const fetchASingleRequest = (requestId, userRole) => async (dispatch) => {
   const error = '';
   const message = '';
@@ -83,20 +82,21 @@ const fetchASingleRequest = (requestId, userRole) => async (dispatch) => {
   dispatch({ type: types.APPROVE_REQUEST_SUCCESS, message });
   try {
     let response;
-    if (userRole === 'admin') {
+    const role = userRole || localStorage.getItem('role');
+
+    if (role === 'admin') {
       response = await fetchData({
         apiUrl: `/requests/${requestId}`,
         headerType: 'token-type',
       });
     }
-    if (userRole === 'user') {
+    if (role === 'user') {
       response = await fetchData({
         apiUrl: `/users/requests/${requestId}`,
         headerType: 'token-type',
       });
     }
     dispatch(complete);
-    console.log(userRole, 'aaaaa');
     if (response.status === 'fail') {
       return response.status;
     }
@@ -106,7 +106,7 @@ const fetchASingleRequest = (requestId, userRole) => async (dispatch) => {
         payload: response.data.requests,
       });
       localStorage.setItem('lastViewedUsername', response.data.requests.username);
-      return response.status;
+      return response.data.requests;
     }
     return response.data.requests;
   } catch (err) {
@@ -130,9 +130,7 @@ const updateRequestAction = (requestId, requestDetails) => async (dispatch) => {
       headerType: 'token-type',
     });
     dispatch(complete);
-    console.log(response, 'we got here o');
     if (response.status === 'faild') {
-      console.log('we got here');
       error = response.message;
       dispatch({ type: types.VALIDATION_ERROR, error });
       return response;
@@ -190,7 +188,7 @@ const requestAction = (requestId, action) => async (dispatch) => {
       headerType: 'token-type',
     });
     dispatch(complete);
-    if (response.status === 'fail') {
+    if (response.status === 'faild') {
       error = response.message;
       dispatch({ type: types.VALIDATION_ERROR, error });
       return response;

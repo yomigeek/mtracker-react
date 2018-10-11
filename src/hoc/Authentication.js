@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
-import Navbar from '../components/Navbar';
+import NavbarComponent from '../components/Navbar';
 
 const checkAuthentication = (WrappedComponent) => {
   class Authentication extends Component {
@@ -31,7 +31,7 @@ const checkAuthentication = (WrappedComponent) => {
 
       return (
         <React.Fragment>
-          <Navbar
+          <NavbarComponent
             {...this.props}
             role={userRole}
           />

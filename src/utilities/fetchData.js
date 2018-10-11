@@ -1,7 +1,7 @@
-// const baseURL = process.env.NODE_ENV !== 'development'
-//   ? 'https://mtrackapi.herokuapp.com/'
-//   : 'http://localhost:3000/api/v1';
 const baseURL = 'https://mtrackapi.herokuapp.com/api/v1';
+/**
+ * @description this FETCHES the back-end API
+ */
 const fetchData = (payload) => {
   let headers;
   const {

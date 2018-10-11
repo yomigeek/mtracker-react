@@ -19,6 +19,10 @@ export class LoginContainer extends React.Component {
     this.setState({ [event.target.id]: event.target.value });
   }
 
+  /**
+   * @description Handles the login process
+   * @returns {null}
+   */
   loginFormHandler = (event) => {
     event.preventDefault();
     const { login, history } = this.props;
