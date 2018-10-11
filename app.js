@@ -3,7 +3,7 @@ import path from 'path';
 
 const app = express();
 
-app.use('/assets/images/logo.png', express.static('dist'));
+app.use(express.static('dist'));
 
 const port = process.env.PORT || '9000';
 
